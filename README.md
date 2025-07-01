@@ -1,6 +1,16 @@
 # AutomaticRange
 An open‑source, reproducible intensity‑scaling method that leverages the nuclear signal as an anchor to calibrate per‑channel contrast. 
 
+# Prerequisites
+
+* Python 3.8 (3.7 should work)
+* Python libraries:
+    - json
+    - pathlib 
+    - napari
+    - numpy
+    - tifffile
+
 # Setup
 
 * Download the github repository (> Code > Download ZIP)
@@ -10,6 +20,8 @@ An open‑source, reproducible intensity‑scaling method that leverages the nuc
 * Open VisualStudio IDE and File > Open Folder and open AutomaticRanges
 * Open the 2.0_Annotate_ranges_tiles.ipynb jupyter notebook
 * Click on Run All. This will open Napari. Then, manually adjust the range of the first image, and then press **Shift + B** to save annotation and go to next image. There are a few key shortcuts that can help you adjust the range faster.
+
+
 
 # Key shortcuts
 
