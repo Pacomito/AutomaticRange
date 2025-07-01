@@ -9,10 +9,9 @@ An open‑source, reproducible intensity‑scaling method that leverages the nuc
 * Place the tiles to annotate into data/ folder (e.g. data/CD4/ which contains tiles_marker/ and tiles_dapi/)
 * Open VisualStudio IDE and File > Open Folder and open AutomaticRanges
 * Open the 2.0_Annotate_ranges_tiles.ipynb jupyter notebook
-* Click on Run All. This will open Napari. Then, manually adjust 
+* Click on Run All. This will open Napari. Then, manually adjust the range of the first image, and then press **Shift + B** to save annotation and go to next image. There are a few key shortcuts that can help you adjust the range faster.
 
-
-# Key shorts
+# Key shortcuts
 
 * Shift + A = reduce the minimum contrast by 10%  
 * Shift + S = increase the minimum contrast by 10%  
@@ -20,6 +19,13 @@ An open‑source, reproducible intensity‑scaling method that leverages the nuc
 * Shift + W = increase the maximum contrast by 10%  
 
 * **Shift + B : Save manually set range and go to next image available.** If there are no more images available, this will not do anything. It means you are finished !
+
+# Annotation Strategy
+
+* Go as low as possible to see if there is signal enrichment in the nucleus or cell membrane. 
+* If you find signal : adjust so that the noise is as low as possible but the cell signal is as clear as possible.
+* As much as possible, regions devoid of cells should be black.
+* Avoid saturating signal in cells, but privilege seeing positive signal. 
 
 # Introduction
 Multiplex fluorescence histochemistry (MxIF) generates large, high-dimensional TIFF images of tissue sections stained for multiple markers (e.g. CD4, nuclear stains), serving as foundational data for modern single-cell analyses. However, raw MxIF images are plagued by variable intensity ranges, heterogeneous signal-to-noise ratios, cell‑density fluctuations, and frequent artifacts such as bright spots, blurs, or folds. Under standard visualization tools (e.g. napari / FIJI), the built‑in “automatic” intensity scaling often fails to reveal biologically relevant patterns—CD4 around nuclei, for instance—forcing users to spend considerable time manually adjusting contrast ranges on each image or region to achieve clarity.
