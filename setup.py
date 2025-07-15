@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='AutomaticRange',
-    version='0.1.2',
+    version='0.1.3',
     author='Pacôme Prompsy',
     author_email='pacome.prompsy@unil.ch',
     description='A python package for automatic range prediction.',
