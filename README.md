@@ -59,3 +59,41 @@ To overcome these limitations, we introduce AutomaticRange, an open‑source, re
 In the following, we describe the algorithmic design of AutomaticRange, validate its performance relative to standard autoscaling in napari and FIJI, and assess its impact on human annotations and downstream model accuracy.
 
 
+# napari-automatic-range
+
+## Overview
+The `napari-automatic-range` plugin provides a simple interface for performing automatic range predictions on images using a trained model. It integrates seamlessly with the Napari viewer, allowing users to easily apply the `predict_range` function to their images.
+
+## Features
+- Button labeled "AutomaticRange" to execute the prediction on the current image.
+- Automatically finds the first DAPI image in the viewer for processing.
+- Displays the normalized image in the Napari viewer.
+
+## Installation
+To install the plugin, clone the repository and install the required dependencies:
+
+```bash
+git clone https://github.com/yourusername/napari-automatic-range.git
+cd napari-automatic-range
+pip install -r requirements.txt
+```
+
+## Usage
+1. Launch Napari.
+2. Load your images into the viewer.
+3. Click the "AutomaticRange" button in the plugin interface.
+4. The normalized image will be displayed in the viewer.
+
+## Requirements
+- Napari
+- PyTorch
+- NumPy
+- SciPy
+- scikit-image
+
+## Contributing
+Contributions are welcome! Please open an issue or submit a pull request for any enhancements or bug fixes.
+
+## License
+This project is licensed under the MIT License. See the LICENSE file for details.
+

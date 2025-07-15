@@ -8,16 +8,20 @@ from torch.utils.tensorboard import SummaryWriter
 from data import RangeAnnotationDataset
 from models import AutomaticRangeNet
 
+
+# Batch
+BATCH = "training_set_processed_CD4_nsamp_20_ntile_5_07102025"
+
 # --- Config ---
 config = {
     "data": {
-        "annotations_dir": "annotations",
-        "marker_dir": "data/tiles_marker",
-        "dapi_dir": "data/tiles_DAPI"
+        "annotations_dir": "annotations/" + BATCH + "/",
+        "marker_dir": "data/" + BATCH + "/tiles_marker/",
+        "dapi_dir": "data/" + BATCH + "/tiles_DAPI/"
     },
     "train_params": {
         "batch_size": 10,
-        "epochs": 15,
+        "epochs": 25,
         "learning_rate": 1e-3,  
         "val_split": 0.2,
         "shuffle": True,
@@ -25,6 +29,10 @@ config = {
     },
     "log_dir": "logs"
 }
+
+# --- Device Configuration ---
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f"Using device: {device}")
 
 # --- Dataset ---
 dataset = RangeAnnotationDataset(
@@ -38,7 +46,6 @@ val_size = int(len(dataset) * config["train_params"]["val_split"])
 train_size = len(dataset) - val_size
 train_set, val_set = random_split(dataset, [train_size, val_size])
 
-print(dataset)
 print(f"Training set size: {len(train_set)}, Validation set size: {len(val_set)}")
 print(f"Total dataset size: {len(dataset)}")
 
@@ -47,23 +54,8 @@ train_loader = DataLoader(train_set, batch_size=config["train_params"]["batch_si
 val_loader = DataLoader(val_set, batch_size=config["train_params"]["batch_size"])
 
 # --- Model ---
-model = AutomaticRangeNet()
+model = AutomaticRangeNet().to(device)  # Move model to GPU
 model.train()
-
-for imgs, targets in train_loader:
-    preds = model(imgs)
-    print("Scaled Targets:", targets)
-    print("Scaled Preds:", preds)
-
-    RANGE_MIN = 0
-    RANGE_MAX = 256 * 256 -1
-
-    targets = targets * (RANGE_MAX - RANGE_MIN) + RANGE_MIN
-    preds = preds  * (RANGE_MAX - RANGE_MIN) + RANGE_MIN
-
-    print("Targets:", targets)
-    print("Preds:", preds)
-    break
 
 criterion = nn.MSELoss()
 optimizer = optim.Adam(model.parameters(), lr=config["train_params"]["learning_rate"])
@@ -74,8 +66,12 @@ writer = SummaryWriter(log_dir=config["log_dir"])
 for epoch in range(config["train_params"]["epochs"]):
     total_loss = 0
     for imgs, targets in train_loader:
+        # Move data to GPU
+        imgs, targets = imgs.to(device), targets.to(device)
+
         preds = model(imgs)
         loss = criterion(preds, targets)
+
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
@@ -87,6 +83,9 @@ for epoch in range(config["train_params"]["epochs"]):
     val_loss = 0
     with torch.no_grad():
         for imgs, targets in val_loader:
+            # Move data to GPU
+            imgs, targets = imgs.to(device), targets.to(device)
+
             preds = model(imgs)
             loss = criterion(preds, targets)
             val_loss += loss.item()
@@ -99,5 +98,5 @@ for epoch in range(config["train_params"]["epochs"]):
 
 # Save model
 os.makedirs("checkpoints", exist_ok=True)
-torch.save(model.state_dict(), "checkpoints/automatic_range.pt")
+torch.save(model.state_dict(), "checkpoints/" + BATCH + "_automatic_range.pt")
 writer.close()
