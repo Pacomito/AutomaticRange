@@ -5,8 +5,8 @@ import torch
 from torch import nn, optim
 from torch.utils.data import DataLoader, random_split
 from torch.utils.tensorboard import SummaryWriter
-from data import RangeAnnotationDataset
-from models import AutomaticRangeNet
+from AutomaticRange.models import AutomaticRangeNet
+from AutomaticRange.data import RangeAnnotationDataset
 
 
 # Batch

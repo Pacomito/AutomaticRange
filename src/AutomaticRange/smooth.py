@@ -1,26 +1,13 @@
 import torch
-from models import AutomaticRangeNet
-from importlib import reload
 import numpy as np
 from scipy.ndimage import gaussian_filter
 from skimage.transform import resize
+from AutomaticRange.models import AutomaticRangeNet
 
-import os
 
-checkpoint_path = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
-    "checkpoints",
-    "training_set_processed_CD4_nsamp_20_ntile_5_07102025_automatic_range.pt"
-)
-
-# Load trained model
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model = AutomaticRangeNet().to(device)
-model.load_state_dict(torch.load(checkpoint_path, map_location=device))
-model.eval()
 
 @staticmethod
-def infer_grid(img_marker, img_dapi, model, patch_size=200, stride=100, device='gpu'):
+def infer_grid(img_marker, img_dapi, model, patch_size=200, stride=100, device='cpu'):
     model.eval()
     h, w = img_marker.shape
     min_preds = []

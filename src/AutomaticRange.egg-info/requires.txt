@@ -1,0 +1,5 @@
+napari[all]
+numpy
+torch
+scipy
+scikit-image

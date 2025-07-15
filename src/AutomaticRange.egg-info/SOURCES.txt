@@ -1,0 +1,15 @@
+LICENSE
+README.md
+setup.cfg
+setup.py
+src/AutomaticRange/__init__.py
+src/AutomaticRange/data.py
+src/AutomaticRange/models.py
+src/AutomaticRange/smooth.py
+src/AutomaticRange/train.py
+src/AutomaticRange/validate.py
+src/AutomaticRange.egg-info/PKG-INFO
+src/AutomaticRange.egg-info/SOURCES.txt
+src/AutomaticRange.egg-info/dependency_links.txt
+src/AutomaticRange.egg-info/requires.txt
+src/AutomaticRange.egg-info/top_level.txt
