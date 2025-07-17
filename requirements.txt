@@ -1,6 +1,0 @@
-napari
-numpy
-torch
-scipy
-scikit-image
-napari[all]

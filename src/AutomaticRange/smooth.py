@@ -2,7 +2,6 @@ import torch
 import numpy as np
 from scipy.ndimage import gaussian_filter
 from skimage.transform import resize
-from AutomaticRange.models import AutomaticRangeNet
 
 
 

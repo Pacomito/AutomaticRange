@@ -5,11 +5,13 @@ An open‑source, reproducible intensity‑scaling method that leverages the nuc
 
 * Python 3.8 (3.7 should work)
 * Python libraries:
-    - json
     - pathlib 
     - napari
     - numpy
     - tifffile
+    - torch
+    - scipy
+    - scikit-image
 
 # Setup
 
