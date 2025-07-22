@@ -33,7 +33,7 @@ class RangeAnnotationDataset(Dataset):
     def __getitem__(self, idx):
         annot_path = self.annotations[idx]
         
-        print(f"Loading annotation from {annot_path}")
+        #print(f"Loading annotation from {annot_path}")
 
         with open(annot_path) as f:
             annot = json.load(f)
@@ -47,8 +47,8 @@ class RangeAnnotationDataset(Dataset):
             # Retrieve the suffix
             suffix = annot_path.stem.split("_")[-1]
              
-        print(f"Base name for tile: {base_name}")
-        print(f"Suffix for tile: {suffix}")
+        #print(f"Base name for tile: {base_name}")
+        #print(f"Suffix for tile: {suffix}")
 
         marker_path = self.tiles_marker_dir / f"{base_name}_{suffix}.tiff"
         dapi_path = self.tiles_dapi_dir / f"{base_name}_DAPI.tiff"
@@ -56,8 +56,8 @@ class RangeAnnotationDataset(Dataset):
         # Check if files exist
         if not marker_path.exists():
             raise FileNotFoundError(f"Marker image not found: {marker_path}")
-        else:
-            print(f"Found marker image: {marker_path}")
+        # else:
+            # print(f"Found marker image: {marker_path}")
             
         # Scale images to [0, 1]
         marker_img = np.array(imread(marker_path)).astype(np.float32)

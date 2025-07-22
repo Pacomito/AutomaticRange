@@ -4,12 +4,27 @@ import torch
 from torch import nn, optim
 from torch.utils.data import DataLoader, random_split
 from torch.utils.tensorboard import SummaryWriter
+
+
+## !! TO REMOVE AFTER TESTING !! ######################################################
+#import sys
+# Remove installed package from sys.path if present
+#for p in list(sys.path):
+#    if "site-packages" in p:
+#        if "AutomaticRange" in p:
+#            sys.path.remove(p)
+
+# Add your local src directory to the front of sys.path
+#sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+## !! TO REMOVE AFTER TESTING !! ######################################################
+
 from AutomaticRange.models import AutomaticRangeNet
 from AutomaticRange.data import RangeAnnotationDataset
 
 
 # Batch
 BATCH = "training_set_processed_CD4_nsamp_20_ntile_5_07102025"
+MODEL = "small_model_training_set_processed_CD4_nsamp_20_ntile_5_07102025"
 
 # --- Config ---
 config = {
@@ -41,6 +56,8 @@ dataset = RangeAnnotationDataset(
     augment=config["train_params"]["augment"]
 )
 
+print("Finished loarding dataset")
+
 val_size = int(len(dataset) * config["train_params"]["val_split"])
 train_size = len(dataset) - val_size
 train_set, val_set = random_split(dataset, [train_size, val_size])
@@ -54,7 +71,9 @@ val_loader = DataLoader(val_set, batch_size=config["train_params"]["batch_size"]
 
 # --- Model ---
 model = AutomaticRangeNet().to(device)  # Move model to GPU
-model.train()
+print(f"Model file: {model.eval()}")
+
+#model.train()
 
 criterion = nn.MSELoss()
 optimizer = optim.Adam(model.parameters(), lr=config["train_params"]["learning_rate"])
@@ -97,5 +116,5 @@ for epoch in range(config["train_params"]["epochs"]):
 
 # Save model
 os.makedirs("checkpoints", exist_ok=True)
-torch.save(model.state_dict(), "checkpoints/" + BATCH + "_automatic_range.pt")
+torch.save(model.state_dict(), "checkpoints/" + MODEL + "_automatic_range.pt")
 writer.close()
